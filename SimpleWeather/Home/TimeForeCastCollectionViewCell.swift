@@ -13,26 +13,27 @@ class TimeForeCastCollectionViewCell: UICollectionViewCell {
     
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 20)
         label.text = "지금"
         label.textAlignment = .center
-        label.backgroundColor = .cyan
+//        label.backgroundColor = .cyan
         return label
     }()
     
     let weatherImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.image = UIImage(systemName: "cloud.heavyrain")
-        imageView.backgroundColor = .systemTeal
+        imageView.contentMode = .scaleAspectFit
+//        imageView.backgroundColor = .systemTeal
         return imageView
     }()
     
     let tempLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
+        label.font = .boldSystemFont(ofSize: 20)
         label.text = "6˚"
         label.textAlignment = .center
-        label.backgroundColor = .cyan
+//        label.backgroundColor = .cyan
         return label
     }()
     
@@ -56,7 +57,7 @@ class TimeForeCastCollectionViewCell: UICollectionViewCell {
         timeLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView)
             make.horizontalEdges.equalTo(contentView)
-            make.height.equalTo(24)
+            make.height.equalTo(20)
         }
         
         contentView.addSubview(weatherImageView)

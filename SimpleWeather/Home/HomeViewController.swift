@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class HomeViewController: UIViewController {
     
@@ -96,10 +97,11 @@ extension HomeViewController {
                 // 도시 이름
                 self.titleCityLabel.text = currentModel.name
                 // 현재 기온
-                self.tempLabel.text = tempConverter(currentModel.main.temp)
+                self.tempLabel.text = MeasurementFormatter.convertTemperature(currentModel.main.temp)
+                
                 // 최고 최저 온도
-                self.minTempLabel.text = tempConverter(currentModel.main.temp_min)
-                self.maxTempLabel.text = tempConverter(currentModel.main.temp_max)
+                self.minTempLabel.text = MeasurementFormatter.convertTemperature(currentModel.main.temp_min)
+                self.maxTempLabel.text = MeasurementFormatter.convertTemperature(currentModel.main.temp_max)
                 
                 group.leave()
             }
@@ -171,12 +173,20 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         return foreCastList.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, 
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeForeCastCollectionViewCell.identifier, for: indexPath) as? TimeForeCastCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.backgroundColor = .blue
+        let dt = Date(timeIntervalSince1970: TimeInterval(foreCastList[indexPath.item].dt))
         
-        cell.tempLabel.text = tempConverter(foreCastList[indexPath.item].main.temp)
+        cell.timeLabel.text = DateFormatter.convertTime(dt)
+        
+        let iconName = foreCastList[indexPath.item].weather[0].icon
+        if let urlString = URL(string: "https://openweathermap.org/img/wn/\(iconName)@2x.png") {
+            cell.weatherImageView.kf.setImage(with: urlString)
+        }
+        
+        cell.tempLabel.text = MeasurementFormatter.convertTemperature(foreCastList[indexPath.item].main.temp)
         
         return cell
     }

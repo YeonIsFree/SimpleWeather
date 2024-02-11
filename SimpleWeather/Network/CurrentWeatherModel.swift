@@ -12,10 +12,6 @@ import Alamofire
 
 // "https://api.openweathermap.org/data/2.5/weather? id=1846266&appid=e88b90bc866ead095a8ee460c4097e00"
 
-func tempConverter(_ temp: Double) -> String {
-    return "\(Int(temp - 273))˚"
-}
-
 struct CurrentWeatherModel: Decodable {
     let coord: Location
     let weather: [Weather]
